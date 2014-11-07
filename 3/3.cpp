@@ -1,4 +1,4 @@
-#include <iostream>
+#include <fstream>
 
 
 int getMaxXor(int L, int R)
@@ -15,9 +15,12 @@ int getMaxXor(int L, int R)
 
 int main()
 {
-    int L, R;
-    std::cin >> L >> R;
+    std::ifstream fin("Input3.txt");
+    std::ofstream fout("Output3.txt");
 
-    std::cout << getMaxXor(L, R) << std::endl;
+    int L, R;
+    fin >> L >> R;
+
+    fout << getMaxXor(L, R) << std::endl;
     return 0;
 }

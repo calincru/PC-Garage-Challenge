@@ -9,6 +9,9 @@ enum Operations {
     MULT = 2
 };
 
+/*
+ * @brief Computes the resulting number, using the generated operators
+ */
 int getTotal(const std::vector<int> &nrs, const std::vector<int> &ops)
 {
     int total = nrs.front();
@@ -32,6 +35,9 @@ int getTotal(const std::vector<int> &nrs, const std::vector<int> &ops)
     return total;
 }
 
+/*
+ * @brief Utilty function to print the result
+ */
 void printSol(const std::vector<int> &input, const std::vector<int> &ops,
               std::ofstream &fout)
 {
@@ -79,6 +85,10 @@ void printSol(const std::vector<int> &input, const std::vector<int> &ops,
     fout << " = " << getTotal(input, ops) << std::endl;
 }
 
+/*
+ * @brief Generate the operators using backtracking and test if the resulted
+ * number divides 101.
+ */
 void recursCheck(const std::vector<int> &input, std::vector<int> &ops, int pos,
                  std::ofstream &fout)
 {

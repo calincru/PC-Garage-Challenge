@@ -1,6 +1,9 @@
 #include <fstream>
 
 
+/*
+ * @brief Computes the max xor value between L and R.
+ */
 int getMaxXor(int L, int R)
 {
     int max = L ^ L;

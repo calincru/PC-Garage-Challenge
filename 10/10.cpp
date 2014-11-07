@@ -34,6 +34,9 @@ int main()
     return 0;
 }
 
+/*
+ * @brief Overload the << operator for printing.
+ */
 ofstream& operator<<(ofstream& strim, AreaMatrix& area)
 {
     for (auto k = 0ul; k <= area[0].size(); k++)
@@ -54,6 +57,9 @@ ofstream& operator<<(ofstream& strim, AreaMatrix& area)
     return strim;
 }
 
+/*
+ * @brief Overload the += operator for pairs to easiely sum up pairs.
+ */
 pair<int, int> &operator+=(pair<int, int> &ret, pair<int, int> &x)
 {
     ret.first += x.first;
@@ -61,6 +67,10 @@ pair<int, int> &operator+=(pair<int, int> &ret, pair<int, int> &x)
     return ret;
 }
 
+/*
+ * @brief Randomly find a path using a modified BFS algorithm from the first
+ * left square to the last, right square.
+ */
 void generateRandomMaze(AreaMatrix& area)
 {
     queue<pair<int, int>> q;

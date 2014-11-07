@@ -3,6 +3,7 @@
 #include <malloc.h>
 #include <ctype.h>
 
+/* Boolean support */
 #ifndef __bool_true_false_are_defined
  #define bool int
  #define false 0
@@ -21,9 +22,9 @@ int main()
 {
     FILE *in=fopen("Input11.txt", "r");
     FILE *out=fopen("Output11.txt", "w");
-    int i, j;
-    int **original;
-    int **solved;
+    int i, j;           /* Auxiliary loop counters */
+    int **original;     /* Sudoku read from infile */
+    int **solved;       /* Sudoku printed to outfile */
 
     original = readSudokuFromFile(in);
     solved = solveSudoku(original);
@@ -37,14 +38,16 @@ int main()
     free(solved);
     fclose(in);
     fclose(out);
+
     return 0;
 }
 
+/* Parses the string read from the infile and returns a 9x9 grid */
 int **readSudokuFromFile(FILE *in) {
-    int **square;
-    char *str;
-    int i, j;
-    int c = 0;
+    int **square;   /* Returned 9x9 grid */
+    char *str;      /* Input string */
+    int i, j;       /* Loop counters */
+    int c = 0;      /* String position */
 
     str = malloc(256);
     fgets(str, 255, in);
@@ -64,12 +67,15 @@ int **readSudokuFromFile(FILE *in) {
     return square;
 }
 
+/* Solve a sudoku square through the use of backtracking */
 int **solveSudoku(int **original)
 {
-    int **solved;
-    int i, j, *x;
-    bool valid;
+    int **solved;   /* Solved 9x9 grid */
+    int i, j;       /* Line and column of sudoku grid */
+    int *x;         /* Pointer to the modified sudoku element */
+    bool valid;     /* Checks if an element contributes to a valid sudoku */
 
+    /* Allocate memory for the returned grid */
     solved = malloc(9 * sizeof *solved);
     for (i = 0; i < 9; i++) {
         solved[i] = malloc(9 * sizeof *solved[i]);
@@ -78,9 +84,11 @@ int **solveSudoku(int **original)
         }
     }
 
+    /* Get first 0 (uncompleted) element */
     i=0;
     j=-1;
     x=getNext(original, solved, &i, &j);
+
     while (x)
     {
         valid=false;
@@ -99,18 +107,22 @@ int **solveSudoku(int **original)
     return solved;
 }
 
+/* Checks if a sudoku square is currently valid */
 bool checkSudoku(int **solved, int x, int y) {
     int i, j;
+    /* Line check */
     for (i=0; i<9; i++) {
         if (solved[x][i]==solved[x][y] && i!=y) {
             return false;
         }
     }
+    /* Column check */
     for (i=0; i<9; i++) {
         if (solved[i][y]==solved[x][y] && i!=x) {
             return false;
         }
     }
+    /* 3x3 square check */
     for(i=x/3*3; i<=x/3*3+2; i++) {
         for(j=y/3*3; j<=y/3*3+2; j++) {
             if(solved[i][j]==solved[x][y] && (i!=x || j!=y)) {
@@ -121,6 +133,7 @@ bool checkSudoku(int **solved, int x, int y) {
     return true;
 }
 
+/* Converts a 9x9 grid into a string printed in out */
 void output(int **solved, FILE *out) {
     int i, j;
     fprintf(out, "[ ");
@@ -137,6 +150,7 @@ void output(int **solved, FILE *out) {
     }
 }
 
+/* Get the next 0 (uncompleted elemnt in sudoku. Horizontal search */
 int* getNext(int **original, int **solved, int *i, int *j)
 {
     bool done=false;
@@ -158,6 +172,7 @@ int* getNext(int **original, int **solved, int *i, int *j)
     else return NULL;
 }
 
+/* Get the previous 0 (uncompleted) sudoku element. Horizontal search */
 int *getPrev(int **original, int **solved, int *i, int *j)
 {
     bool done=false;

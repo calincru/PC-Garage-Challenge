@@ -6,13 +6,15 @@
  */
 int getMaxXor(int L, int R)
 {
-    int max = L ^ L;
-    for (int i = L; i <= R; ++i)
-        for (int j = L + 1; j <= R; ++j)
-            if ((i ^ j) > max)
-                max = i ^ j;
+    int ret = 1;
+    L ^= R;
 
-    return max;
+    while (L) {
+        ret <<= 1;
+        L >>= 1;
+    }
+
+    return ret - 1;
 }
 
 

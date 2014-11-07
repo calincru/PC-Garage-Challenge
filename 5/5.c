@@ -6,7 +6,7 @@
 /* Boolean support */
 #ifndef __bool_true_false_are_defined
  #define bool   int
- #define false  0 
+ #define false  0
  #define true   1
  #define __bool_true_false_are_defined  1
 #endif
@@ -23,13 +23,13 @@ int main()
     FILE *out = fopen("Output5.txt", "w");
     char *prop;     /* The input string */
     size_t n;       /* Input string size */
-    
+
     prop = malloc( MAX_SIZE );
     fgets(prop, MAX_IN_SIZE-1, in);
     n = strlen(prop);
     latinize(prop, n);
     fprintf(out, "%s", prop);
-    
+
     free(prop);
     fclose(in);
     fclose(out);
@@ -45,22 +45,22 @@ void latinize(char *p, size_t n) {
     int wordEnd;        /* End of current word */
     bool capInitial;    /* True if the current word is capitalized */
     bool beginsWithC;   /* True if the current word begins with a cons */
-    
+
     suffix = malloc(4);
-    
+
     while ( p[wordStart] != '\0' ) {
         /* Search for the next word */
         while ( !isalpha(p[wordStart]) ) {
             ++wordStart;
         }
         wordEnd = wordStart;
-        
+
         /* Search for the end of found word */
         while ( isalpha(p[wordEnd] )) {
             wordEnd++;
         }
         wordEnd--;
-        
+
         /* Move all consonants at the end of the word */
         beginsWithC = false;
         capInitial=false;
@@ -76,7 +76,7 @@ void latinize(char *p, size_t n) {
             /* Always put lower case letters at the end */
             p[wordEnd] = tolower(aux);
         }
-        
+
         /* Determine what suffix and shift to be used */
         if ( beginsWithC ) {
             shift = 2;
@@ -85,17 +85,17 @@ void latinize(char *p, size_t n) {
             shift = 3;
             memcpy(suffix, "lei", 3);
         }
-        
+
         /* Capitalize if necesary */
         if (capInitial) {
             p[wordStart] = toupper(p[wordStart]);
         }
-        
+
         /* Shift the string to the right [shift] characters */
         for (i = n + shift; i > wordEnd + shift; i--) {
             p[i] = p[i-shift];
         }
-        
+
         /* Add the suffix to the word */
         for (i = 0; i < shift; i++) {
             p[wordEnd + i + 1] = suffix[i];
